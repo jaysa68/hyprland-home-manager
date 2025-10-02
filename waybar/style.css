@@ -1,0 +1,164 @@
+* {
+  text-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  font-family: "Segoe UI", "Ubuntu";
+  font-weight: 600;
+  font-size: 12.7px;
+	
+	
+}
+
+window#waybar {
+  background:  rgba(25, 25, 25, 0.65);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: white);
+}
+
+tooltip {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+tooltip label{
+  color: white);
+}
+
+#custom-os_button {
+	font-family: "JetBrainsMono Nerd Font";
+  font-size: 24px;
+	padding-left: 12px;
+	padding-right: 20px;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#custom-os_button:hover {
+  background:  rgba(200, 200, 200, 0.3);
+	color: white);
+}
+
+#workspaces {
+  color: transparent;
+	margin-right: 1.5px;
+	margin-left: 1.5px;
+}
+#workspaces button {
+  padding: 3px;
+  color: rgba(255, 255, 255, 0.25);
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#workspaces button.active {
+	color: white);
+	border-bottom: 3px solid white;
+}
+#workspaces button.focused {
+  color: rgba(100, 100, 100, 0.5);
+}
+#workspaces button.urgent {
+	background:  rgba(255, 200, 0, 0.35);
+	border-bottom: 3px dashed orange;
+	color: orange;
+}
+#workspaces button:hover {
+  background: rgba(200, 200, 200, 0.3);
+	color: white);
+}
+
+#taskbar {
+}
+
+#taskbar button {
+	min-width: 130px;
+	border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+	margin-left: 2px;
+	margin-right: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: white;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#taskbar button.active {
+	border-bottom: 3px solid white;
+  background: rgba(100, 100, 100, 0.5);
+}
+
+#taskbar button:hover {
+	border-bottom: 3px solid white;
+  background: rgba(200, 200, 200, 0.3);
+	color: white);
+}
+
+#cpu, #disk, #memory {
+	padding:3px;
+}
+
+#temperature {
+	color: transparent;
+	font-size: 0px;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#temperature.critical {
+	padding-right: 3px;
+	color: orange;
+	font-size: initial;
+	border-bottom: 3px dashed orange;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#window {
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#tray{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#tray > .passive {
+	border-bottom: none;
+}
+#tray > .active {
+	border-bottom: 3px solid white;
+}
+#tray > .needs-attention {
+	border-bottom: 3px solid orange;
+}
+#tray > widget {
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#tray > widget:hover {
+	background: rgba(200, 200, 200, 0.3);
+}
+
+#pulseaudio {
+	font-family: "JetBrainsMono Nerd Font";
+	padding-left: 3px;
+  padding-right: 3px;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#pulseaudio:hover {
+ 	background: rgba(200, 200, 200, 0.3);
+}
+
+#network {
+	padding-left: 3px;
+  padding-right: 3px;
+}
+
+#language {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#clock {
+  padding-right: 5px;
+  padding-left: 5px;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#clock:hover {
+	background: rgba(200, 200, 200, 0.3);
+}
