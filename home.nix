@@ -87,6 +87,76 @@
   gtk.font.size = 32;
 
   programs = {
+    firefox = {
+      enable = true;
+      policies = {
+        # got this from https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
+        DisableTelemetry = true;
+	DisableFirefoxStudies = true;
+	EnableTrackingProtection = {
+	  Value = true;
+	  Locked = true;
+	  Cryptomining = true;
+	  Fingerprinting = true;
+	};
+	DisablePocket = true;
+	ExtensionSettings = {
+	  # uBlock Origin:
+          "uBlock0@raymondhill.net" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            installation_mode = "force_installed";
+          };
+	  "Google_AI_Overviews_Blocker@zachbarnes.dev" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/hide-google-ai-overviews/latest.xpi";
+            installation_mode = "force_installed";
+	  };
+	};
+      };
+      profiles = {
+       "jaysa" = {
+         id = 0;
+         isDefault = true;
+
+         search.engines = {
+           "Nix Packages" = {
+             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+             definedAliases = [ "@np" ];
+             urls = [{
+               template = "https://search.nixos.org/packages";
+               params = [
+                 { name = "query"; value = "{searchTerms}"; }
+               ];
+             }];
+           };
+           "Nix Options" = {
+             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+             definedAliases = [ "@no" ];
+             urls = [{
+               template = "https://search.nixos.org/options";
+               params = [
+                 { name = "query"; value = "{searchTerms}"; }
+               ];
+             }];
+           };
+           "Home Manager Options" = {
+             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+             definedAliases = [ "@hm" ];
+             urls = [{
+               template = "https://home-manager-options.extranix.com/";
+               params = [
+                 { name = "query"; value = "{searchTerms}"; }
+               ];
+             }];
+           };
+	 };
+
+         settings = {
+           "browser.startup.homepage" = "https://jaysa.net"; 
+         };
+
+        };
+      };
+    };
     fuzzel = {
       enable = true;
       settings.main.anchor = "bottom-left";
@@ -139,14 +209,21 @@
         tooltip label{
           color: @content_main;
         }
-	#custom-launcher {
+	#custom-menu{
 	  font-family: "JetBrainsMono Nerd Font";
           font-size: 24px;
           padding-left: 12px;
        	  padding-right: 20px;
        	  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        #custom-launcher:hover {
+	#custom-logout {
+	  font-family: "JetBrainsMono Nerd Font";
+          font-size: 24px;
+          padding-left: 12px;
+       	  padding-right: 20px;
+       	  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
+        #custom-menu:hover {
           background:  @bg_hover;
 	  color: @content_main;
         }
@@ -157,6 +234,7 @@
         }
 	#workspaces button {
           padding: 3px;
+	  padding-left: 6px;
           color: @content_inactive;
 	  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
@@ -249,22 +327,35 @@
 	#clock:hover {
 	  background: @bg_hover;
 	}
+	#image {
+     	  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+	  padding: 2px;
+	}
+	#image:hover {
+	  background:@bg_hover;
+	}
+	#image.chrome-icon {
+	  padding: 6px;
+	}
       '';
       settings = {
         mainBar = {
           position = "bottom";
 	  modules-left = [ 
-	    "custom/launcher"
+	    "custom/menu"
+	    "image#nautilus-icon"
+	    "image#kitty-icon"
+	    "image#firefox-icon"
+	    "image#chrome-icon"
 	    "hyprland/workspaces"
 	    "wlr/taskbar"
 	  ];
 	  modules-right = [ 
-	    "cpu"
-	    "disk"
 	    "tray" 
 	    "pulseaudio"
 	    "hyprland/language"
 	    "clock"
+	    "custom/logout"
 	  ];
 	  "hyprland/workspaces" = {
 	    "icon-size" = 32;
@@ -279,23 +370,23 @@
 	      "5" = [];
 	    };
 	  };
-	  "cpu" = {
-	    "interval" = 5;
-	    "format" = "  {usage}%";
-	    "max-length" = 10;
-	  };
-	  "disk" = {
-	    "interval" = 30;
-	    "format" = "󰋊 {percentage_used}%";
-	    "path" = "/";
-	    "tooltip" = true;
-	    "unit" = "GB";
-	    "tooltip-format" = "Available {free} of {total}";
-	  };
+	  #"cpu" = {
+	  #  "interval" = 5;
+	  #  "format" = "  {usage}%";
+	  #  "max-length" = 10;
+	  #};
+	  #"disk" = {
+	  #  "interval" = 30;
+	  #  "format" = "󰋊 {percentage_used}%";
+	  #  "path" = "/";
+	  #  "tooltip" = true;
+	  #  "unit" = "GB";
+	  #  "tooltip-format" = "Available {free} of {total}";
+	  #};
           "hyprland/language" = {
             "format" = "{}";
-            "format-en" = "ENG";
-            "format-ru" = "РУС";
+            "format-en" = "⌨ ENG";
+            "format-ru" = "⌨ РУС";
           };
 	  "wlr/taskbar" = {
 	    "format" = "{icon} {title:.17}";
@@ -311,34 +402,39 @@
 	    "spacing" = 3;
 	  };
 	  "clock" = {
-            "format" = "      {:%R\n %d.%m.%Y}";
+            "format" = "      {:%I:%M %p\n %a, %b %d %Y}";
 	    "tooltip-format" = "<tt><small>{calendar}</small></tt>";
-	    "calendar" = {
-	      "mode" = "year";
-	      "mode-mon-col" = 3;
-	      "weeks-pos" = "right";
-	      "on-scroll" = 1;
-	      "format" = {
-                "months" = "<span color='#ffead3'><b>{}</b></span>";
-                "days" = "<span color='#ecc6d9'><b>{}</b></span>";
-                "weeks" = "<span color='#99ffdd'><b>W{}</b></span>";
-                "weekdays" = "<span color='#ffcc66'><b>{}</b></span>";
-                "today" = "<span color='#ff6699'><b><u>{}</u></b></span>";
-	      };
-	    };
-            "actions" = {
-              "on-click-right" = "mode";
-              "on-click-forward" = "tz_up";
-              "on-click-backward" = "tz_down";
-              "on-scroll-up" = "shift_up";
-              "on-scroll-down" = "shift_down";
-            };
 	  };
-	  "custom/launcher" = {
+	  "custom/menu" = {
 	    "format" = " menu";
 	    "icon-size" = 48;
 	    "tootltip-format" = "{title}";
 	    "on-click" = "fuzzel";
+	  };
+	  "custom/logout" = {
+	    "format" = "⇒ Sign out";
+	    "icon-size" = 48;
+	    "on-click" = "hyprctl dispatch exit";
+	  };
+	  "image#nautilus-icon" = {
+	    "path" = "/run/current-system/sw/share/icons/hicolor/scalable/apps/org.gnome.Nautilus.svg";
+	    "size" = 36;
+	    "on-click" = "nautilus";
+	  };
+	  "image#kitty-icon" = {
+	    "path" = "/run/current-system/sw/share/icons/hicolor/256x256/apps/kitty.png";
+	    "size" = 36;
+	    "on-click" = "kitty";
+	  };
+	  "image#chrome-icon" = {
+	    "path" = "/run/current-system/sw/share/icons/hicolor/128x128/apps/google-chrome.png";
+	    "size" = 32;
+	    "on-click" = "google-chrome-stable";
+	  };
+	  "image#firefox-icon" = {
+	    "path" = "/run/current-system/sw/share/icons/hicolor/128x128/apps/firefox.png";
+	    "size" = 36;
+	    "on-click" = "firefox";
 	  };
 	  "pulseaudio" = {
             "max-volume" = 150;
@@ -368,11 +464,12 @@
       defaultEditor = true;
       extraConfig = ''
         set background=dark
-	colorscheme gruvbox
+	colorscheme everforest
 	set number
       '';
       plugins = with pkgs.vimPlugins; [
-        gruvbox
+        #gruvbox
+	everforest
         neo-tree-nvim
         nvim-web-devicons #neotree optional
         nvim-window-picker #neotree optional
@@ -402,7 +499,7 @@
     kitty = {
       enable = true;
       enableGitIntegration = true;
-      themeFile = "gruvbox-dark-hard";
+      themeFile = "everforest_dark_medium";
       font = {
         name = "hack";
         #size = 20.0;
@@ -413,9 +510,10 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = "/home/j/ja/jaysa/remote/hyprland-home-manager/ramona.jpg";
+      preload = "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png";
       wallpaper = [ 
-        ", /home/j/ja/jaysa/remote/hyprland-home-manager/ramona.jpg"
+        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png"
+        ", /home/j/ja/jaysa/remote/hyprland-home-manager/ramona-5.jpg"
       ];
     };
   };
@@ -474,16 +572,30 @@
       };
 
       bind = [
-      "$mod, Q, exec, kitty"
-      "$mod, G, exec, firefox"
+
+      # basics
       "$mod, C, killactive"
       "$mod, C, killactive"
       ", F11, fullscreen"
+
+      # application shortcuts
+      "$mod, Q, exec, kitty"
+      "$mod, G, exec, firefox"
+
+      # workspaces
       "$mod, 1, workspace, 1"
       "$mod, 2, workspace, 2"
       "$mod, 3, workspace, 3"
       "$mod, 4, workspace, 4"
       "$mod, 5, workspace, 5"
+      "SUPER_SHIFT, 1, movetoworkspace, 1"
+      "SUPER_SHIFT, 2, movetoworkspace, 2"
+      "SUPER_SHIFT, 3, movetoworkspace, 3"
+      "SUPER_SHIFT, 4, movetoworkspace, 4"
+      "SUPER_SHIFT, 5, movetoworkspace, 5"
+
+      # screenshots
+      "SHIFT, Print, exec, grim - | wl-copy"
       ];
 
       plugin.hyprbars = {
