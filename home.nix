@@ -34,6 +34,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    hyprshot
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -352,6 +353,7 @@
 	  ];
 	  modules-right = [ 
 	    "tray" 
+	    "custom/paper"
 	    "pulseaudio"
 	    "hyprland/language"
 	    "clock"
@@ -404,6 +406,9 @@
 	  "clock" = {
             "format" = "      {:%I:%M %p\n %a, %b %d %Y}";
 	    "tooltip-format" = "<tt><small>{calendar}</small></tt>";
+	  };
+	  "custom/paper" = {
+	    "exec" = "paper-genmon";
 	  };
 	  "custom/menu" = {
 	    "format" = " menu";
@@ -510,10 +515,21 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      preload = "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png";
+      preload = [ 
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/close-panty.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/close-stocking.jpg"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-autumn-picnic.png"
+      ];
       wallpaper = [ 
-        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png"
-        ", /home/j/ja/jaysa/remote/hyprland-home-manager/ramona-5.jpg"
+        #desktop Shadow
+        "HDMI-A-3, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
+        "DP-4, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-autumn-picnic.png"
+
+        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
+        ", /home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.jpg"
       ];
     };
   };
@@ -529,6 +545,10 @@
     settings = {
       "$mod" = "SUPER";
       exec-once = "waybar";
+      monitor = [
+        "DP-4, 2560x1440, 2560x0, 1"
+        "HDMI-A-3, 2560x1440, 0x0, 1"
+      ];
       general = {
         border_size = 2;
 	gaps_in = 5;
@@ -594,8 +614,10 @@
       "SUPER_SHIFT, 4, movetoworkspace, 4"
       "SUPER_SHIFT, 5, movetoworkspace, 5"
 
-      # screenshots
-      "SHIFT, Print, exec, grim - | wl-copy"
+      # screenshots (windows keybinds)
+      ", Print, exec, hyprshot -m window -m active --clipboard-only" # entire screen
+      "Alt, Print, exec, hyprshot -m window --clipboard-only" # active window
+      "SUPER_SHIFT, S, exec, hyprshot -m region --clipboard-only" # select a region
       ];
 
       plugin.hyprbars = {
