@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -74,13 +74,10 @@
 
   # Let Home Manager install and manage itself.
 
+  #systemwide dark mode, including firefox
   dconf.settings = {
-    "org/gnome/shell" = {
-      favorite-apps = [
-        "firefox.desktop"
-        "org.gnome.Nautilus.desktop"
-        "org.gnome.Calendar.desktop"
-      ];
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
     };
   };
 
@@ -101,17 +98,18 @@
 	  Fingerprinting = true;
 	};
 	DisablePocket = true;
-	ExtensionSettings = {
-	  # uBlock Origin:
-          "uBlock0@raymondhill.net" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            installation_mode = "force_installed";
-          };
-	  "Google_AI_Overviews_Blocker@zachbarnes.dev" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/hide-google-ai-overviews/latest.xpi";
-            installation_mode = "force_installed";
-	  };
-	};
+#	ExtensionSettings = {
+#	 "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+#         # uBlock Origin:
+#          "uBlock0@raymondhill.net" = {
+#            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+#            installation_mode = "force_installed";
+#          };
+#	  "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+#	    install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+#	    installation_mode = "force_installed";
+#	  };
+#	};
       };
       profiles = {
        "jaysa" = {
@@ -154,6 +152,17 @@
          settings = {
            "browser.startup.homepage" = "https://jaysa.net"; 
          };
+
+	 extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+	   ublock-origin
+	   bitwarden
+	   gruvbox-dark-theme
+	 ];
+
+         extraConfig = ''
+	   user_pref("extensions.autoDisableScopes", 0); 
+	   user_pref("extensions.enabledScopes", 15);
+	 '';
 
         };
       };
@@ -469,12 +478,12 @@
       defaultEditor = true;
       extraConfig = ''
         set background=dark
-	colorscheme everforest
+	colorscheme gruvbox
 	set number
       '';
       plugins = with pkgs.vimPlugins; [
-        #gruvbox
-	everforest
+        gruvbox
+	#everforest
         neo-tree-nvim
         nvim-web-devicons #neotree optional
         nvim-window-picker #neotree optional
@@ -504,7 +513,11 @@
     kitty = {
       enable = true;
       enableGitIntegration = true;
-      themeFile = "everforest_dark_medium";
+
+      #https://github.com/kovidgoyal/kitty-themes/tree/master/themes for more themes
+      #themeFile = "everforest_dark_medium";
+      themeFile = "gruvbox-dark-hard";
+
       font = {
         name = "hack";
         #size = 20.0;

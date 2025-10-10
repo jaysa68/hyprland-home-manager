@@ -8,15 +8,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-addons = { url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    inputs@{ nixpkgs, home-manager, firefox-addons, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
       homeConfigurations."jaysa" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
@@ -28,8 +31,9 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-	#extraSpecialArgs = {
-	#};
+	extraSpecialArgs = {
+	  inherit inputs;
+	};
       };
     };
 }
