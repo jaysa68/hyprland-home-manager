@@ -86,7 +86,7 @@
 
   programs = {
     firefox = {
-      enable = true;
+      enable = false;
       policies = {
         # got this from https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
         DisableTelemetry = true;
@@ -357,6 +357,7 @@
 	    "image#kitty-icon"
 	    "image#firefox-icon"
 	    "image#chrome-icon"
+	    "image#calendar-icon"
 	    "hyprland/workspaces"
 	    "wlr/taskbar"
 	  ];
@@ -450,6 +451,11 @@
 	    "size" = 36;
 	    "on-click" = "firefox";
 	  };
+	  "image#calendar-icon" = {
+	    "path" = "/home/j/ja/jaysa/remote/hyprland-home-manager/gcal.png";
+	    "size" = 36;
+	    "on-click" = "firefox http://bcal.berkeley.edu";
+	  };
 	  "pulseaudio" = {
             "max-volume" = 150;
             "scroll-step" = 10;
@@ -541,8 +547,8 @@
         "HDMI-A-3, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
         "DP-4, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-autumn-picnic.png"
 
-        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
-        ", /home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.jpg"
+#        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
+        ", /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
       ];
     };
   };
@@ -610,6 +616,7 @@
       "$mod, C, killactive"
       "$mod, C, killactive"
       ", F11, fullscreen"
+      "$mod, F, togglefloating"
 
       # application shortcuts
       "$mod, Q, exec, kitty"
@@ -633,6 +640,11 @@
       "SUPER_SHIFT, S, exec, hyprshot -m region --clipboard-only" # select a region
       ];
 
+      # right click + super to resize
+      bindm = [
+	"$mod, mouse:273, resizewindow"
+      ];
+
       plugin.hyprbars = {
 	bar_color = "rgb(2a2a2a)";
         bar_height = 28;
@@ -645,6 +657,7 @@
 	hyprbars-button = [
 	  "rgb(2a2a2a), 20, , hyprctl dispatch killactive"
           "rgb(2a2a2a), 20, , hyprctl dispatch fullscreen 2"
+          "rgb(2a2a2a), 20, ▲, hyprctl dispatch togglefloating"
           #"rgb(2a2a2a), 20, ━, xdotool windowunmap $(xdotool getactivewindow)"
 	];
       };
