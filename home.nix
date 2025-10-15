@@ -657,7 +657,7 @@
 	hyprbars-button = [
 	  "rgb(2a2a2a), 20, , hyprctl dispatch killactive"
           "rgb(2a2a2a), 20, , hyprctl dispatch fullscreen 2"
-          "rgb(2a2a2a), 20, ▲, hyprctl dispatch togglefloating"
+          "rgb(2a2a2a), 20, ▣, hyprctl dispatch togglefloating"
           #"rgb(2a2a2a), 20, ━, xdotool windowunmap $(xdotool getactivewindow)"
 	];
       };
