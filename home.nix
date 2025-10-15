@@ -452,7 +452,7 @@
 	    "on-click" = "firefox";
 	  };
 	  "image#calendar-icon" = {
-	    "path" = "/home/j/ja/jaysa/remote/hyprland-home-manager/gcal.png";
+	    "path" = "/home/j/ja/jaysa/remote/hyprland-home-manager/icons/gcal.png";
 	    "size" = 36;
 	    "on-click" = "firefox http://bcal.berkeley.edu";
 	  };
@@ -535,20 +535,20 @@
     enable = true;
     settings = {
       preload = [ 
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-night.png"
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/close-panty.png"
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/close-stocking.jpg"
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
-        "/home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-autumn-picnic.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/summer-night.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/summer-day.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/close-panty.png"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/close-stocking.jpg"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-steam-autumn.jpg"
+        "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-autumn-picnic.png"
       ];
       wallpaper = [ 
         #desktop Shadow
-        "HDMI-A-3, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
-        "DP-4, /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-autumn-picnic.png"
+        "HDMI-A-3, /home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-steam-autumn.jpg"
+        "DP-4, /home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-autumn-picnic.png"
 
-#        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/summer-day.png"
-        ", /home/j/ja/jaysa/remote/hyprland-home-manager/nemupan-steam-autumn.jpg"
+#        "HDMI-A-2, /home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/summer-day.png"
+        ", /home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-steam-autumn.jpg"
       ];
     };
   };
