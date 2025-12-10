@@ -1,6 +1,11 @@
 { inputs, config, pkgs, ... }:
 
 {
+
+  imports = [
+    inputs.nix4nvchad.homeManagerModule
+  ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "jaysa";
@@ -35,6 +40,7 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     hyprshot
+    lsd
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -81,10 +87,10 @@
     };
   };
 
-
-  gtk.font.size = 32;
+  #gtk.font.size = 32;
 
   programs = {
+    nvchad.enable = true;
     firefox = {
       enable = false;
       policies = {
@@ -476,11 +482,11 @@
     };
     git = {
       enable = true;
-      userName = "jaysa68";
-      userEmail = "gh@jaysa.net";
+      settings.user.name = "jaysa68";
+      settings.user.email = "gh@jaysa.net";
     };
     neovim = {
-      enable = true;
+      enable = false;
       defaultEditor = true;
       extraConfig = ''
         set background=dark
@@ -531,6 +537,14 @@
     };
   };
 
+  programs.bash = {
+    enable = true;
+    shellAliases =
+    {
+      ls = "lsd";
+    };
+  };
+
   services.hyprpaper = {
     enable = true;
     settings = {
@@ -565,9 +579,11 @@
       "$mod" = "SUPER";
       exec-once = "waybar";
       monitor = [
-        "DP-4, 2560x1440, 2560x0, 1"
-        "HDMI-A-3, 2560x1440, 0x0, 1"
+#        "HDMI-A-2, preferred, auto, 1"
+        ", preferred, auto, 1.5"
       ];
+      #  "DP-4, 2560x1440, 2560x0, 1"
+      #  "HDMI-A-3, 2560x1440, 0x0, 1"
       general = {
         border_size = 2;
 	gaps_in = 5;
@@ -663,5 +679,4 @@
       };
     };
   };
-
 }
