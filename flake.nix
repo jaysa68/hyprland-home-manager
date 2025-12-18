@@ -18,10 +18,17 @@
     ocf-nix = {
       url = "github:ocf/nix";
     };
+    cosmic-manager = {
+      url = "github:HeitorAugustoLN/cosmic-manager";
+      inputs = {
+        nixpkgs.follows = "ocf-nix/nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
   };
 
   outputs =
-    inputs@{ ocf-nix, home-manager, firefox-addons, ... }:
+    inputs@{ self, ocf-nix, home-manager, firefox-addons, ... }:
     let
       inherit (ocf-nix.inputs) nixpkgs; # same version of nixpkgs as ocf
       system = "x86_64-linux";
@@ -50,7 +57,7 @@
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
 	      extraSpecialArgs = {
-	        inherit system inputs;
+          inherit self inputs;
 	      };
 
       };

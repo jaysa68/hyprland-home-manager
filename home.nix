@@ -1,20 +1,27 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, cosmicLib, self, ... }:
 
+let
+  repoRoot = self.outPath;
+  inherit (cosmicLib.cosmic) importRON mkRON;
+in
 {
 
   imports = [
     inputs.nix4nvchad.homeManagerModule
+    inputs.cosmic-manager.homeManagerModules.cosmic-manager
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "jaysa";
   home.homeDirectory = "/home/j/ja/jaysa";
-  home.file.".config/cosmic" = {
-    source = config.lib.file.mkOutOfStoreSymlink "/home/j/ja/jaysa/remote/hyprland-home-manager/cosmic";
-    recursive = true;
-    force = true;
-  };
+
+  # Failed test
+  #home.file.".config/cosmic" = {
+  #  source = config.lib.file.mkOutOfStoreSymlink "/home/j/ja/jaysa/remote/hyprland-home-manager/cosmic";
+  #  recursive = true;
+  #  force = true;
+  #};
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -570,6 +577,40 @@
         ", /home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/nemupan-steam-autumn.jpg"
       ];
     };
+  };
+
+  wayland.desktopManager.cosmic = {
+    # https://heitoraugustoln.github.io/cosmic-manager/options/index.html
+    enable = true;
+    appearance.theme = {
+      dark = importRON "${repoRoot}/cosmic/Rose-Pine-Theme.ron";
+      mode = "dark";
+    };
+    wallpapers = [
+      {
+        filter_by_theme = true;
+        filter_method = cosmicLib.cosmic.mkRON "enum" "Lanczos";
+        output = "all";
+        rotation_frequency = 600;
+        sampling_method = cosmicLib.cosmic.mkRON "enum" "Alphanumeric";
+        scaling_mode = cosmicLib.cosmic.mkRON "enum" {
+          value = [
+            (cosmicLib.cosmic.mkRON "tuple" [
+              0.5
+              1.0
+              (cosmicLib.cosmic.mkRON "raw" "0.345354352")
+            ])
+          ];
+          variant = "Fit";
+        };
+        source = cosmicLib.cosmic.mkRON "enum" {
+          value = [
+            "${repoRoot}/wallpapers/kingdom-two-crowns-christmas.png"
+          ];
+          variant = "Path";
+        };
+      }
+    ];
   };
 
   wayland.windowManager.hyprland = {
