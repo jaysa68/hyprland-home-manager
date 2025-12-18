@@ -10,6 +10,11 @@
   # manage.
   home.username = "jaysa";
   home.homeDirectory = "/home/j/ja/jaysa";
+  home.file.".config/cosmic" = {
+    source = config.lib.file.mkOutOfStoreSymlink "/home/j/ja/jaysa/remote/hyprland-home-manager/cosmic";
+    recursive = true;
+    force = true;
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -546,7 +551,7 @@
   };
 
   services.hyprpaper = {
-    enable = true;
+    enable = false;
     settings = {
       preload = [ 
         "/home/j/ja/jaysa/remote/hyprland-home-manager/wallpapers/summer-night.png"
