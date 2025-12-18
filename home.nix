@@ -540,7 +540,7 @@ in
 
       #https://github.com/kovidgoyal/kitty-themes/tree/master/themes for more themes
       #themeFile = "everforest_dark_medium";
-      themeFile = "gruvbox-dark-hard";
+      themeFile = "rose-pine-moon";
 
       font = {
         name = "hack";
